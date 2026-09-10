@@ -1,0 +1,5 @@
+/* Minimal theme overrides for the Outpost docs site. */
+:root {
+  --ifm-color-primary: #2563eb;
+  --ifm-code-font-size: 95%;
+}

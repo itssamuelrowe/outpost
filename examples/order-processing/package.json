@@ -1,0 +1,25 @@
+{
+  "name": "@outpost/example-order-processing",
+  "version": "0.0.0",
+  "private": true,
+  "description": "End-to-end example: SQS consumer, engine, resilience, and alerts.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "demo": "tsx src/demo.ts",
+    "test": "echo \"no tests for example\""
+  },
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.700.0",
+    "@outpost/core": "0.0.1",
+    "@outpost/plugin-alerts": "0.0.1",
+    "@outpost/plugin-resilience": "0.0.1",
+    "@outpost/storage-mysql": "0.0.1",
+    "@outpost/transport-sqs": "0.0.1",
+    "mysql2": "^3.11.5"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@outpost/storage-mysql",
+  "version": "0.0.1",
+  "description": "MySQL/InnoDB storage adapter for Outpost (the sole planned backend).",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "schema"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@outpost/core": "0.0.1",
+    "date-fns-tz": "^3.2.0",
+    "mysql2": "^3.11.5"
+  },
+  "license": "MIT"
+}

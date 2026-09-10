@@ -1,0 +1,28 @@
+{
+  "name": "@outpost/transport-sqs",
+  "version": "0.0.1",
+  "description": "Amazon SQS transport for Outpost: publish and consume workflow messages.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.700.0",
+    "@outpost/core": "0.0.1"
+  },
+  "license": "MIT"
+}
