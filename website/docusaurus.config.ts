@@ -12,8 +12,11 @@ const config: Config = {
   title: "Outpost",
   tagline: "Durable execution you can embed in your app",
   favicon: "img/favicon.ico",
-  url: "https://outpost.example.com",
-  baseUrl: "/",
+  url: "https://itssamuelrowe.github.io",
+  baseUrl: "/outpost/",
+  organizationName: "itssamuelrowe",
+  projectName: "outpost",
+  trailingSlash: false,
   onBrokenLinks: "warn",
   markdown: {
     hooks: {
