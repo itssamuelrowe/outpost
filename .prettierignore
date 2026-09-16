@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+build/
+.next/
+.docusaurus/
+website/.docusaurus/
+website/build/
+*.log
+yarn.lock
+package-lock.json
