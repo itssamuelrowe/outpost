@@ -1,0 +1,40 @@
+{
+    "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-jsdoc"],
+    "printWidth": 100,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "singleQuote": false,
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "overrides": [
+        {
+            "files": "*.yaml",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ],
+    "importOrder": [
+        "^react$",
+        "^\\@mui/material(/(.*))?$",
+        "^\\@mui/lab(/(.*))?$",
+        "^\\@mui/icons-material(/(.*))?$",
+        "<THIRD_PARTY_MODULES>",
+        "^\\.\\.(/(.*))?$",
+        "^\\.(/(.*))?$"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "importOrderGroupNamespaceSpecifiers": true,
+    "importOrderCaseInsensitive": false,
+
+    "jsdocSeparateReturnsFromParam": false,
+    "jsdocSeparateTagGroups": false,
+    "jsdocDescriptionWithDot": false,
+    "jsdocDescriptionTag": false,
+    "jsdocVerticalAlignment": false,
+    "jsdocCommentLineStrategy": "multiline",
+    "jsdocPreferCodeFences": false,
+    "jsdocPrintWidth": 80,
+    "jsdocCapitalizeDescription": false
+}
