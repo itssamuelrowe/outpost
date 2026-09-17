@@ -4,7 +4,7 @@ Conventions to follow when writing documentation and code in this repository.
 
 ## Documentation writing style
 
-The docs live in `website/docs/**` (Docusaurus) and are written as prose that teaches.
+The docs live in `packages/documentation/docs/**` (Docusaurus) and are written as prose that teaches.
 
 - **No em dashes.** Do not use the `—` character anywhere in documentation. Rephrase instead:
     - For a parenthetical aside, use a comma or parentheses: "Because those values are persisted, sometimes after a restart, Outpost is careful."
@@ -33,4 +33,4 @@ The docs live in `website/docs/**` (Docusaurus) and are written as prose that te
 
 - After code changes to `packages/core`, run `npm run typecheck` and `npm test`.
 - After changes that the examples consume, rebuild `@outpost/core` (`npm run build`) before building an example, since examples import the built package.
-- After documentation changes, run the Docusaurus build in `website/` and confirm there are no broken-link warnings.
+- After documentation changes, run the Docusaurus build in `packages/documentation/` and confirm there are no broken-link warnings.

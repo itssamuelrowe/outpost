@@ -4,8 +4,8 @@ coverage/
 build/
 .next/
 .docusaurus/
-website/.docusaurus/
-website/build/
+packages/documentation/.docusaurus/
+packages/documentation/build/
 *.log
 yarn.lock
 package-lock.json

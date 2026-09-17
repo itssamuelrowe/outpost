@@ -1,0 +1,95 @@
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Flow chart of the scheduler's poll loop: start begins the loop; each tick claims due one-shot timers and dispatches each to the timer handler, then claims due cron schedules, advancing each to its next occurrence and firing it through the cron handler; the loop then sleeps for the poll interval and ticks again until stop ends it.">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <!-- ================= Column guide =================
+       Loop spine center x = 300
+       Right-hand action column center x = 640
+       Sleep return lane x = 860
+  -->
+
+  <!-- start(handler) -->
+  <rect x="200" y="24" width="200" height="48" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5" />
+  <text x="300" y="53" font-size="14" fill="#0f172a" text-anchor="middle">start(handler)</text>
+
+  <!-- Decision: still running? -->
+  <polygon points="300,100 410,148 300,196 190,148" fill="#f1f5f9" stroke="#475569" stroke-width="1.5" />
+  <text x="300" y="144" font-size="13" fill="#0f172a" text-anchor="middle">Still</text>
+  <text x="300" y="161" font-size="13" fill="#0f172a" text-anchor="middle">running?</text>
+
+  <!-- stop() -->
+  <rect x="190" y="24" width="0" height="0" />
+  <rect x="560" y="124" width="200" height="48" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" />
+  <text x="660" y="147" font-size="14" fill="#0f172a" text-anchor="middle">stop(): loop ends</text>
+  <text x="660" y="163" font-size="11" fill="#7f1d1d" text-anchor="middle">after current cycle</text>
+
+  <!-- Tick heading box -->
+  <rect x="200" y="236" width="200" height="44" rx="10" fill="#eef2ff" stroke="#2563eb" stroke-width="1.5" />
+  <text x="300" y="263" font-size="14" fill="#0f172a" text-anchor="middle">tick()</text>
+
+  <!-- Phase 1: claim due timers -->
+  <rect x="180" y="312" width="240" height="60" rx="10" fill="#eef2ff" stroke="#2563eb" stroke-width="1.5" />
+  <text x="300" y="337" font-size="13" fill="#0f172a" text-anchor="middle">Claim due one-shot timers</text>
+  <text x="300" y="356" font-size="11" fill="#1e3a8a" text-anchor="middle">(atomic; marks them processed)</text>
+
+  <!-- dispatch to timer handler -->
+  <rect x="540" y="316" width="240" height="52" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+  <text x="660" y="340" font-size="13" fill="#0f172a" text-anchor="middle">handler(timer)</text>
+  <text x="660" y="357" font-size="11" fill="#166534" text-anchor="middle">resume the workflow</text>
+
+  <!-- Phase 2: claim due cron -->
+  <rect x="180" y="408" width="240" height="60" rx="10" fill="#eef2ff" stroke="#2563eb" stroke-width="1.5" />
+  <text x="300" y="433" font-size="13" fill="#0f172a" text-anchor="middle">Claim due cron schedules</text>
+  <text x="300" y="452" font-size="11" fill="#1e3a8a" text-anchor="middle">(atomic; advance nextRunAt)</text>
+
+  <!-- fire cron handler -->
+  <rect x="540" y="412" width="240" height="52" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+  <text x="660" y="433" font-size="13" fill="#0f172a" text-anchor="middle">onCronFire(fire)</text>
+  <text x="660" y="450" font-size="11" fill="#166534" text-anchor="middle">jitter, then run workflow</text>
+
+  <!-- Sleep for poll interval -->
+  <rect x="180" y="512" width="240" height="52" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
+  <text x="300" y="536" font-size="13" fill="#0f172a" text-anchor="middle">Sleep for poll interval</text>
+  <text x="300" y="553" font-size="11" fill="#854d0e" text-anchor="middle">default 1000 ms</text>
+
+  <!-- ================= Edges ================= -->
+
+  <!-- start -> decision -->
+  <path d="M 300 72 L 300 98" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+
+  <!-- decision -> stop (no) -->
+  <path d="M 410 148 L 558 148" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+  <text x="484" y="139" font-size="12" fill="#475569" text-anchor="middle">no</text>
+
+  <!-- decision -> tick (yes) -->
+  <path d="M 300 196 L 300 234" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+  <text x="316" y="219" font-size="12" fill="#475569" text-anchor="middle">yes</text>
+
+  <!-- tick -> claim timers -->
+  <path d="M 300 280 L 300 310" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+
+  <!-- claim timers -> handler (per due timer) -->
+  <path d="M 420 342 L 538 342" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)" />
+  <text x="479" y="333" font-size="11" fill="#1e40af" text-anchor="middle">each due timer</text>
+
+  <!-- claim timers -> claim cron -->
+  <path d="M 300 372 L 300 406" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+  <text x="330" y="392" font-size="11" fill="#475569" text-anchor="middle">then</text>
+
+  <!-- claim cron -> cron fire (per due schedule) -->
+  <path d="M 420 438 L 538 438" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)" />
+  <text x="479" y="429" font-size="11" fill="#1e40af" text-anchor="middle">each due schedule</text>
+
+  <!-- claim cron -> sleep -->
+  <path d="M 300 468 L 300 510" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+
+  <!-- sleep -> decision (loop back up the far-right lane) -->
+  <path d="M 420 538 L 860 538 L 860 148 L 412 148" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" />
+  <text x="860" y="345" font-size="12" fill="#475569" text-anchor="middle" transform="rotate(90 860 345)">next cycle</text>
+</svg>

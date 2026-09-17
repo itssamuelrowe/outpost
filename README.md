@@ -34,7 +34,7 @@ Outpost is for **finishing a multi-step process correctly, across systems and ac
   A checkout charges the card, creates the order, then notifies the customer. A crash after the charge must resume at the order and never redo the charge. Outpost checkpoints each step and re-runs only the unfinished ones. A database transaction cannot span three external systems; this can.
 
 - **Durable waits that outlive the process**  
-  "Hold the order for two hours, then ship." "Wait a day, then send a reminder." A workflow can [`sleep`](./website/docs/scheduling/durable-sleep.md) durably: the timer is persisted, the process may exit, and the workflow resumes on time, possibly on another machine. No held connection, no lock, no cron job re-deriving state you already had.
+  "Hold the order for two hours, then ship." "Wait a day, then send a reminder." A workflow can [`sleep`](./packages/documentation/docs/scheduling/durable-sleep.md) durably: the timer is persisted, the process may exit, and the workflow resumes on time, possibly on another machine. No held connection, no lock, no cron job re-deriving state you already had.
 
 - **Recurring work that survives restarts**  
   Durable cron runs a workflow on a schedule that lives in the database, not in one machine's memory. Any instance can fire it, exactly one wins the claim, missed windows can be replayed, and it is time-zone aware. It replaces a fragile `setInterval` or an OS crontab that silently drops runs when the box is down.

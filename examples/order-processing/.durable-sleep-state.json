@@ -1,0 +1,142 @@
+{
+    "workflows": {
+        "order-42": {
+            "workflowIdentifier": "order-42",
+            "workflowName": "fulfil-order",
+            "status": "COMPLETED",
+            "input": "eyJvcmRlcklkIjoib3JkZXItNDIifQ==",
+            "output": "Im9yZGVyIG9yZGVyLTQyIHNoaXBwZWQi",
+            "error": null,
+            "createdAt": "2026-09-13T12:22:11.280Z",
+            "updatedAt": "2026-09-13T12:23:11.323Z"
+        }
+    },
+    "steps": {
+        "order-42\u0000reserveStock": {
+            "workflowIdentifier": "order-42",
+            "stepKey": "reserveStock",
+            "status": "COMPLETED",
+            "attempts": 1,
+            "maxAttempts": 1,
+            "output": "eyJyZXNlcnZhdGlvbklkIjoicmVzLW9yZGVyLTQyIn0=",
+            "lastError": null,
+            "fenceToken": 1,
+            "lockedUntil": null,
+            "completedAt": "2026-09-13T12:22:11.283Z",
+            "createdAt": "2026-09-13T12:22:11.281Z",
+            "updatedAt": "2026-09-13T12:22:11.283Z"
+        },
+        "order-42\u0000shipOrder": {
+            "workflowIdentifier": "order-42",
+            "stepKey": "shipOrder",
+            "status": "COMPLETED",
+            "attempts": 1,
+            "maxAttempts": 1,
+            "output": "eyJ0cmFja2luZ051bWJlciI6InRyay1vcmRlci00MiJ9",
+            "lastError": null,
+            "fenceToken": 1,
+            "lockedUntil": null,
+            "completedAt": "2026-09-13T12:23:11.322Z",
+            "createdAt": "2026-09-13T12:23:11.320Z",
+            "updatedAt": "2026-09-13T12:23:11.322Z"
+        }
+    },
+    "schedules": [
+        {
+            "scheduleIdentifier": 1,
+            "workflowIdentifier": "order-42",
+            "stepKey": "cooling-period",
+            "runAt": "2026-09-13T12:23:11.283Z",
+            "status": "PROCESSED",
+            "payload": null,
+            "createdAt": "2026-09-13T12:22:11.283Z"
+        }
+    ],
+    "sleepTimers": {
+        "order-42\u0000cooling-period": "2026-09-13T12:23:11.283Z"
+    },
+    "events": [
+        {
+            "identifier": 1,
+            "workflowIdentifier": "order-42",
+            "stepKey": "reserveStock",
+            "eventType": "STEP_STARTED",
+            "details": "{\"attempt\":1}",
+            "createdAt": "2026-09-13T12:22:11.282Z"
+        },
+        {
+            "identifier": 2,
+            "workflowIdentifier": "order-42",
+            "stepKey": "reserveStock",
+            "eventType": "STEP_COMPLETED",
+            "details": "{\"attempt\":1}",
+            "createdAt": "2026-09-13T12:22:11.283Z"
+        },
+        {
+            "identifier": 3,
+            "workflowIdentifier": "order-42",
+            "stepKey": "cooling-period",
+            "eventType": "TIMER_SCHEDULED",
+            "details": "{\"runAt\":\"2026-09-13T12:23:11.283Z\"}",
+            "createdAt": "2026-09-13T12:22:11.283Z"
+        },
+        {
+            "identifier": 4,
+            "workflowIdentifier": "order-42",
+            "stepKey": "cooling-period",
+            "eventType": "TIMER_SCHEDULED",
+            "details": "{\"runAt\":\"2026-09-13T12:23:11.283Z\"}",
+            "createdAt": "2026-09-13T12:22:31.829Z"
+        },
+        {
+            "identifier": 5,
+            "workflowIdentifier": "order-42",
+            "stepKey": "cooling-period",
+            "eventType": "TIMER_SCHEDULED",
+            "details": "{\"runAt\":\"2026-09-13T12:23:11.283Z\"}",
+            "createdAt": "2026-09-13T12:22:49.937Z"
+        },
+        {
+            "identifier": 6,
+            "workflowIdentifier": "order-42",
+            "stepKey": "cooling-period",
+            "eventType": "TIMER_SCHEDULED",
+            "details": "{\"runAt\":\"2026-09-13T12:23:11.283Z\"}",
+            "createdAt": "2026-09-13T12:23:05.181Z"
+        },
+        {
+            "identifier": 7,
+            "workflowIdentifier": "order-42",
+            "stepKey": "cooling-period",
+            "eventType": "TIMER_SCHEDULED",
+            "details": "{\"runAt\":\"2026-09-13T12:23:11.283Z\"}",
+            "createdAt": "2026-09-13T12:23:10.312Z"
+        },
+        {
+            "identifier": 8,
+            "workflowIdentifier": "order-42",
+            "stepKey": "shipOrder",
+            "eventType": "STEP_STARTED",
+            "details": "{\"attempt\":1}",
+            "createdAt": "2026-09-13T12:23:11.321Z"
+        },
+        {
+            "identifier": 9,
+            "workflowIdentifier": "order-42",
+            "stepKey": "shipOrder",
+            "eventType": "STEP_COMPLETED",
+            "details": "{\"attempt\":1}",
+            "createdAt": "2026-09-13T12:23:11.323Z"
+        },
+        {
+            "identifier": 10,
+            "workflowIdentifier": "order-42",
+            "stepKey": null,
+            "eventType": "WORKFLOW_COMPLETED",
+            "details": "{}",
+            "createdAt": "2026-09-13T12:23:11.323Z"
+        }
+    ],
+    "nextScheduleIdentifier": 2,
+    "nextEventIdentifier": 11
+}
