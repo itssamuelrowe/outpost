@@ -41,3 +41,5 @@ export type Serializable =
  * run time by the engine's optional `validateSerializable` check.
  */
 export type SerializableInput = null | boolean | number | string | readonly unknown[] | object;
+
+export type SerializableOutput = SerializableInput;
