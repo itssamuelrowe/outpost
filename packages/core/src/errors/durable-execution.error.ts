@@ -7,13 +7,13 @@
  */
 export class StepExhaustedError extends Error {
     public constructor(
-        public readonly workflowIdentifier: string,
+        public readonly workflowId: string,
         public readonly stepKey: string,
         public readonly attempts: number,
         public readonly lastError: string | null,
     ) {
         super(
-            `Step "${stepKey}" in workflow "${workflowIdentifier}" could not complete after ${attempts} attempt(s): ${lastError ?? "unknown error"}`,
+            `Step "${stepKey}" in workflow "${workflowId}" could not complete after ${attempts} attempt(s): ${lastError ?? "unknown error"}`,
         );
         this.name = "StepExhaustedError";
     }
@@ -32,11 +32,11 @@ export class StepExhaustedError extends Error {
  */
 export class StepResultExpiredError extends Error {
     public constructor(
-        public readonly workflowIdentifier: string,
+        public readonly workflowId: string,
         public readonly stepKey: string,
     ) {
         super(
-            `The memoized result of step "${stepKey}" in workflow "${workflowIdentifier}" has expired. ` +
+            `The memoized result of step "${stepKey}" in workflow "${workflowId}" has expired. ` +
                 `Handle this explicitly (regenerate or compensate); the engine does not re-run it automatically.`,
         );
         this.name = "StepResultExpiredError";
@@ -54,12 +54,12 @@ export class StepResultExpiredError extends Error {
  */
 export class WorkflowSuspendedError extends Error {
     public constructor(
-        public readonly workflowIdentifier: string,
+        public readonly workflowId: string,
         public readonly timerKey: string,
         public readonly resumeAt: Date,
     ) {
         super(
-            `Workflow "${workflowIdentifier}" is suspended at sleep "${timerKey}" until ${resumeAt.toISOString()}.`,
+            `Workflow "${workflowId}" is suspended at sleep "${timerKey}" until ${resumeAt.toISOString()}.`,
         );
         this.name = "WorkflowSuspendedError";
     }
@@ -72,8 +72,8 @@ export class WorkflowSuspendedError extends Error {
  * cancellation should catch this and treat the run as abandoned.
  */
 export class WorkflowCancelledError extends Error {
-    public constructor(public readonly workflowIdentifier: string) {
-        super(`Workflow "${workflowIdentifier}" has been cancelled and will not run.`);
+    public constructor(public readonly workflowId: string) {
+        super(`Workflow "${workflowId}" has been cancelled and will not run.`);
         this.name = "WorkflowCancelledError";
     }
 }
@@ -85,11 +85,11 @@ export class WorkflowCancelledError extends Error {
  */
 export class StepNeedsReviewError extends Error {
     public constructor(
-        public readonly workflowIdentifier: string,
+        public readonly workflowId: string,
         public readonly stepKey: string,
     ) {
         super(
-            `Step "${stepKey}" in workflow "${workflowIdentifier}" is ambiguous and has no probe to resolve it; it has been parked for manual review.`,
+            `Step "${stepKey}" in workflow "${workflowId}" is ambiguous and has no probe to resolve it; it has been parked for manual review.`,
         );
         this.name = "StepNeedsReviewError";
     }
