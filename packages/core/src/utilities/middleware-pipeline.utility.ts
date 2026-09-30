@@ -12,7 +12,7 @@ export type TerminalOperation<TResult = unknown> = () => Promise<TResult>;
 /**
  * Composes step middleware around a terminal operation.
  */
-export class MiddlewarePipelineUtility {
+export class MiddlewarePipeline {
     /**
      * Composes an ordered list of middleware around a terminal operation.
      *
