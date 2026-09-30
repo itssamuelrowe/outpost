@@ -1,7 +1,7 @@
 import type { Serializable, SerializableInput, SerializableOutput } from "./serializable.interface.js";
 import type { StepContext } from "./step-context.interface.js";
 import type { StepOptions } from "./step-options.interface.js";
-import type { Constructor } from "../decorators/workflow-metadata.js";
+import type { Constructor } from "../decorators/constructor.js";
 
 /**
  * Options accepted when starting a child workflow from within a parent.
