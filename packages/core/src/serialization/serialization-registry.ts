@@ -105,15 +105,33 @@ export class SerializationRegistry {
     private readonly recipesByName = new Map<string, SerializationRecipe>();
 
     /**
+     * Creates a registry, optionally registering an initial list of recipes in
+     * one shot. Passing recipes here is equivalent to constructing an empty
+     * registry and calling {@link SerializationRegistry.registerAll}:
+     *
+     * ```ts
+     * const registry = new SerializationRegistry([
+     *     ...SerializationRegistry.getAllBuiltInRecipes(),
+     *     moneyRecipe,
+     * ]);
+     * ```
+     *
+     * @param recipes The recipes to register, in order. Most specific first
+     *   when two could overlap.
+     */
+    public constructor(recipes: SerializationRecipe[] = []) {
+        this.registerAll(recipes);
+    }
+
+    /**
      * Returns every built-in {@link SerializationRecipe} (for `Date`, `Map`,
      * `Set`, and `bigint`), in a sensible registration order. Convenient for
      * the common case of "just let me use Dates and Maps in my workflow data":
      *
      * ```ts
-     * const serialization = new SerializationRegistry();
-     * for (const recipe of SerializationRegistry.getAllBuiltInRecipes()) {
-     *     serialization.register(recipe);
-     * }
+     * const serialization = new SerializationRegistry(
+     *     SerializationRegistry.getAllBuiltInRecipes(),
+     * );
      * ```
      *
      * A fresh array is returned each call, so callers may filter or reorder it
@@ -144,6 +162,29 @@ export class SerializationRegistry {
         const erased = recipe as unknown as SerializationRecipe;
         this.recipes.push(erased);
         this.recipesByName.set(recipe.name, erased);
+        return this;
+    }
+
+    /**
+     * Registers several recipes in one call, in the order given. This is a
+     * convenience over calling {@link SerializationRegistry.register} in a
+     * loop, and follows the same rules: registration order decides precedence
+     * when two recipes could overlap, and a duplicate name throws.
+     *
+     * ```ts
+     * registry.registerAll([
+     *     ...SerializationRegistry.getAllBuiltInRecipes(),
+     *     moneyRecipe,
+     * ]);
+     * ```
+     *
+     * @param recipes The recipes to register.
+     * @returns The registry, so calls can be chained.
+     */
+    public registerAll(recipes: SerializationRecipe[]): this {
+        for (const recipe of recipes) {
+            this.register(recipe);
+        }
         return this;
     }
 
