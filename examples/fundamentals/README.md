@@ -13,14 +13,27 @@ npm install
 This pulls `@outpost/core` from npm. You do not need to clone the Outpost
 repository to run these.
 
-If you want to run it without pulling `@outpost/core`,
+### Running locally before the packages are published
+
+`@outpost/core` is not on npm yet, so until it is published, link the local
+build with `npm link` instead of relying on `npm install` to fetch it.
+
+From the repository root, build and register the package once:
+
+```bash
+npm run build --workspace @outpost/core
+(cd packages/core && npm link)
 ```
-# once per package, from each package dir
-cd packages/core && npm link
-# then in the example group
-cd examples/fundamentals && npm link @outpost/core
-npm run hello
+
+Then, in this directory, install the dev tooling and link the package:
+
+```bash
+npm install --no-save tsx typescript
+npm link @outpost/core
 ```
+
+Now the `npm run` scripts below work against your local build. When the package
+is published, drop the link and a plain `npm install` resolves it normally.
 
 ## Examples
 
