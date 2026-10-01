@@ -4,8 +4,7 @@
     "private": true,
     "description": "Embeddable, correctness-first durable execution for Node/TypeScript: memoized steps, ambiguous-failure probes, durable sleep and cron, all inside your app on a pluggable storage backend.",
     "workspaces": [
-        "packages/*",
-        "examples/*"
+        "packages/*"
     ],
     "scripts": {
         "build": "yarn workspaces run build",
