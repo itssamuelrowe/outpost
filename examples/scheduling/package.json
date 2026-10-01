@@ -1,0 +1,20 @@
+{
+    "name": "outpost-example-scheduling",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Standalone Outpost examples: durable sleep and durable cron.",
+    "type": "module",
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "durable-sleep": "tsx src/durable-sleep.ts",
+        "cron-backfill-update": "tsx src/cron-backfill-update.ts",
+        "functional-cron": "tsx src/functional-cron.ts"
+    },
+    "dependencies": {
+        "@outpost/core": "^0.0.1"
+    },
+    "devDependencies": {
+        "tsx": "^4.19.2",
+        "typescript": "^5.6.3"
+    }
+}
