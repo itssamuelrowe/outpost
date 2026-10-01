@@ -1,0 +1,23 @@
+{
+    "name": "outpost-example-fundamentals",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Standalone Outpost examples: the core authoring model on in-memory storage.",
+    "type": "module",
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "hello": "tsx src/hello.ts",
+        "child-workflows": "tsx src/child-workflows.ts",
+        "deterministic-values": "tsx src/deterministic-values.ts",
+        "workflow-management": "tsx src/workflow-management.ts",
+        "serialization-recipes": "tsx src/serialization-recipes.ts",
+        "functional-style": "tsx src/functional-style.ts"
+    },
+    "dependencies": {
+        "@outpost/core": "^0.0.1"
+    },
+    "devDependencies": {
+        "tsx": "^4.19.2",
+        "typescript": "^5.6.3"
+    }
+}
