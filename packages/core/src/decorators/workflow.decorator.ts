@@ -1,4 +1,4 @@
-import { WorkflowMetadataRegistry } from "./workflow-metadata-registry.js";
+import { DecoratedClassRegistry } from "./decorated-class-registry.js";
 import type { Constructor } from "./constructor.js";
 
 /**
@@ -35,7 +35,7 @@ export interface WorkflowDecoratorOptions {
  */
 export function Workflow(options: WorkflowDecoratorOptions = {}) {
     return function decorate(target: Constructor): void {
-        const metadata = WorkflowMetadataRegistry.registerClassDecorator(target, "Workflow");
+        const metadata = DecoratedClassRegistry.registerClassDecorator(target, "Workflow");
         if (options.name !== undefined) {
             metadata.name = options.name;
         }

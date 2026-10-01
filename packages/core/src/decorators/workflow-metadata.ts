@@ -1,30 +1,5 @@
 import type { StepOptions } from "../interfaces/step-options.interface.js";
-
-/**
- * The recurrence configuration recorded by the {@link Cron} decorator.
- */
-export interface CronMetadata {
-    /**
-     * The schedule name; defaults to the workflow name when not overridden.
-     */
-    name?: string;
-    /**
-     * A five- or six-field cron expression.
-     */
-    cronExpression: string;
-    /**
-     * The IANA time zone the expression is evaluated in. Defaults to UTC.
-     */
-    timeZone?: string;
-    /**
-     * Whether missed occurrences are replayed on recovery. Defaults to `false`.
-     */
-    catchUp?: boolean;
-    /**
-     * An optional serialized payload delivered to each fire.
-     */
-    payload?: string | null;
-}
+import type { CronMetadata } from "./cron-metadata.js";
 
 /**
  * The resolved configuration for a single decorated step method.
@@ -78,7 +53,7 @@ export interface WorkflowClassMetadata {
     /**
      * The recurring schedule recorded by the {@link Cron} decorator, when
      * present. A workflow class carries at most one cron schedule; it is
-     * registered with a {@link Scheduler} by {@link registerCronWorkflows}, which
+     * registered with a {@link Scheduler} by {@link CronWorkflowAdapter.registerCronWorkflows}, which
      * drives the same functional scheduling API used everywhere else.
      */
     cron?: CronMetadata;

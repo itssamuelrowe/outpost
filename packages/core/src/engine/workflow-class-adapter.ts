@@ -3,7 +3,7 @@ import type { Serializable, SerializableInput } from "../interfaces/serializable
 import type { StepContext } from "../interfaces/step-context.interface.js";
 import type { StepOptions } from "../interfaces/step-options.interface.js";
 import type { WorkflowContext } from "../interfaces/workflow-context.interface.js";
-import { WorkflowMetadataRegistry } from "../decorators/workflow-metadata-registry.js";
+import { DecoratedClassRegistry } from "../decorators/decorated-class-registry.js";
 import type { Constructor } from "../decorators/constructor.js";
 import type { WorkflowClassMetadata } from "../decorators/workflow-metadata.js";
 import { StepNaming } from "../utilities/step-naming.utility.js";
@@ -54,7 +54,7 @@ export class WorkflowClassAdapter {
             instance = classOrInstance as Record<string, unknown>;
         }
 
-        const metadata = WorkflowMetadataRegistry.read(constructor);
+        const metadata = DecoratedClassRegistry.read(constructor);
         if (!metadata) {
             throw new Error(
                 `Class "${constructor.name}" is not a workflow. Did you forget the @Workflow() decorator?`,

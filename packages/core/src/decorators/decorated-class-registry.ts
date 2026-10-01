@@ -2,12 +2,22 @@ import type { Constructor } from "./constructor.js";
 import type { WorkflowClassMetadata } from "./workflow-metadata.js";
 
 /**
- * The registry of workflow metadata, keyed by the class constructor.
+ * The registry of decorated workflow classes, keyed by the class constructor.
+ *
+ * One record per class holds everything the class-level and method-level
+ * decorators contribute:
+ *      - the workflow name and lifecycle method from {@link Workflow}
+ *      - the per-method step options from {@link Step}
+ *      - the probe and error-classifier associations from {@link Probe} and {@link ClassifyError}
+ *      - the recurring schedule from {@link Cron}
+ * 
+ * A cron workflow is just a decorated class that also carries {@link CronMetadata},
+ * so it lives in the same registry rather than a separate one.
  *
  * Metadata is recorded and read through the static members of this class so the
  * registry logic stays discoverable with its owning type.
  */
-export class WorkflowMetadataRegistry {
+export class DecoratedClassRegistry {
     /**
      * The backing store, keyed by the class constructor.
      *
@@ -25,7 +35,7 @@ export class WorkflowMetadataRegistry {
      * applies them.
      */
     static getOrCreate(target: Constructor): WorkflowClassMetadata {
-        let metadata = WorkflowMetadataRegistry.registry.get(target);
+        let metadata = DecoratedClassRegistry.registry.get(target);
         if (!metadata) {
             metadata = {
                 name: target.name,
@@ -35,7 +45,7 @@ export class WorkflowMetadataRegistry {
                 classifierByStepMethodName: new Map(),
                 appliedClassDecorators: new Set(),
             };
-            WorkflowMetadataRegistry.registry.set(target, metadata);
+            DecoratedClassRegistry.registry.set(target, metadata);
         }
         return metadata;
     }
@@ -45,7 +55,7 @@ export class WorkflowMetadataRegistry {
      * workflow.
      */
     static read(target: Constructor): WorkflowClassMetadata | undefined {
-        return WorkflowMetadataRegistry.registry.get(target);
+        return DecoratedClassRegistry.registry.get(target);
     }
 
     /**
@@ -60,7 +70,7 @@ export class WorkflowMetadataRegistry {
      * @throws Error when `decoratorName` was already applied to `target`.
      */
     static registerClassDecorator(target: Constructor, decoratorName: string): WorkflowClassMetadata {
-        const metadata = WorkflowMetadataRegistry.getOrCreate(target);
+        const metadata = DecoratedClassRegistry.getOrCreate(target);
         if (metadata.appliedClassDecorators.has(decoratorName)) {
             throw new Error(
                 `@${decoratorName} was applied more than once to class "${target.name}". ` +

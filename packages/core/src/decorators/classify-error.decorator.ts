@@ -1,4 +1,4 @@
-import { WorkflowMetadataRegistry } from "./workflow-metadata-registry.js";
+import { DecoratedClassRegistry } from "./decorated-class-registry.js";
 import type { Constructor } from "./constructor.js";
 import { StepNaming } from "../utilities/step-naming.utility.js";
 
@@ -36,7 +36,7 @@ export function ClassifyError(stepMethodName?: string) {
         _descriptor: PropertyDescriptor,
     ): void {
         const target = (prototype as { constructor: Constructor }).constructor;
-        const metadata = WorkflowMetadataRegistry.getOrCreate(target);
+        const metadata = DecoratedClassRegistry.getOrCreate(target);
         /*
          * When no step name is given, infer it from the method name using the
          * `classifyErrorFor<Step>` convention.

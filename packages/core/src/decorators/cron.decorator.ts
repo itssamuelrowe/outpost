@@ -1,4 +1,4 @@
-import { WorkflowMetadataRegistry } from "./workflow-metadata-registry.js";
+import { DecoratedClassRegistry } from "./decorated-class-registry.js";
 import type { Constructor } from "./constructor.js";
 
 /**
@@ -36,7 +36,7 @@ export interface CronDecoratorOptions {
  *
  * The decorator only records metadata; it neither schedules anything nor
  * changes the class. Scheduling happens when you pass the class to
- * {@link registerCronWorkflows}, which reads this metadata and registers the
+ * {@link CronWorkflowAdapter.registerCronWorkflows}, which reads this metadata and registers the
  * schedule through the ordinary functional scheduling API
  * (`scheduler.registerCron` plus `engine.run`). In other words, `@Cron` is pure
  * sugar over the functional path: anything it does, you could do by hand.
@@ -50,12 +50,12 @@ export interface CronDecoratorOptions {
  *     }
  *
  *     // Wire every cron workflow to the scheduler in one call:
- *     registerCronWorkflows(scheduler, engine, [NightlyReport]);
+ *     CronWorkflowAdapter.registerCronWorkflows(scheduler, engine, [NightlyReport]);
  *     ```;
  */
 export function Cron(options: CronDecoratorOptions) {
     return function decorate(target: Constructor): void {
-        const metadata = WorkflowMetadataRegistry.registerClassDecorator(target, "Cron");
+        const metadata = DecoratedClassRegistry.registerClassDecorator(target, "Cron");
         metadata.cron = {
             name: options.name,
             cronExpression: options.expression,

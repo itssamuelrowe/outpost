@@ -1,5 +1,5 @@
 import type { StepOptions } from "../interfaces/step-options.interface.js";
-import { WorkflowMetadataRegistry } from "./workflow-metadata-registry.js";
+import { DecoratedClassRegistry } from "./decorated-class-registry.js";
 import type { Constructor } from "./constructor.js";
 
 /**
@@ -38,7 +38,7 @@ export function Step(options: StepDecoratorOptions = {}) {
          * constructor keeps class-level and method-level metadata together.
          */
         const target = (prototype as { constructor: Constructor }).constructor;
-        const metadata = WorkflowMetadataRegistry.getOrCreate(target);
+        const metadata = DecoratedClassRegistry.getOrCreate(target);
         const { id, ...stepOptions } = options;
         metadata.stepsByMethodName.set(propertyKey, {
             stepKey: id ?? propertyKey,
