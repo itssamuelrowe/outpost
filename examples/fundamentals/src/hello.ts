@@ -122,7 +122,7 @@ function printDurableState(snapshot: StorageSnapshot): void {
     console.log(`\nSchedules (${snapshot.schedules.length}):`);
     for (const schedule of snapshot.schedules) {
         console.log(
-            `  - #${schedule.scheduleId} [${schedule.status}] for ${schedule.stepKey ?? "workflow"}`,
+            `  - ${schedule.scheduleId} [${schedule.status}] for ${schedule.stepKey ?? "workflow"}`,
         );
     }
 
