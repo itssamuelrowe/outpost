@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { addMilliseconds, compareDesc, isAfter } from "date-fns";
 
 import { CronUtility } from "../utilities/cron.utility.js";
@@ -38,8 +40,6 @@ export class MemoryStorage implements StorageAdapter {
      * each.
      */
     private readonly sleepTimers = new Map<string, Date>();
-    private nextScheduleId = 1;
-    private nextEventId = 1;
 
     /**
      * The append-only audit log, exposed so tests can make assertions on it.
@@ -244,7 +244,7 @@ export class MemoryStorage implements StorageAdapter {
             step.status =
                 status === StepStatus.AMBIGUOUS ? StepStatus.AMBIGUOUS : StepStatus.PENDING;
             this.schedules.push({
-                scheduleId: this.nextScheduleId++,
+                scheduleId: randomUUID(),
                 workflowId,
                 stepKey,
                 runAt: retryAt,
@@ -293,7 +293,7 @@ export class MemoryStorage implements StorageAdapter {
          * resume when the sleep becomes due.
          */
         this.schedules.push({
-            scheduleId: this.nextScheduleId++,
+            scheduleId: randomUUID(),
             workflowId,
             stepKey: timerKey,
             runAt,
@@ -311,7 +311,7 @@ export class MemoryStorage implements StorageAdapter {
         payload: string | null,
     ): Promise<void> {
         this.schedules.push({
-            scheduleId: this.nextScheduleId++,
+            scheduleId: randomUUID(),
             workflowId,
             stepKey,
             runAt,
@@ -326,7 +326,7 @@ export class MemoryStorage implements StorageAdapter {
         limit: number,
     ): Promise<
         Array<{
-            scheduleId: number;
+            scheduleId: string;
             workflowId: string;
             stepKey: string | null;
             payload: string | null;
@@ -351,10 +351,8 @@ export class MemoryStorage implements StorageAdapter {
         }));
     }
 
-    public async setTimerStatus(scheduleId: number, status: ScheduleStatus): Promise<void> {
-        const timer = this.schedules.find(
-            (schedule) => schedule.scheduleId === scheduleId,
-        );
+    public async setTimerStatus(scheduleId: string, status: ScheduleStatus): Promise<void> {
+        const timer = this.schedules.find((schedule) => schedule.scheduleId === scheduleId);
         if (timer) {
             timer.status = status;
         }
@@ -367,7 +365,7 @@ export class MemoryStorage implements StorageAdapter {
         details: Record<string, unknown>,
     ): Promise<void> {
         this.events.push({
-            id: this.nextEventId++,
+            id: randomUUID(),
             workflowId,
             stepKey,
             eventType,

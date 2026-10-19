@@ -58,10 +58,10 @@ export interface StorageAdapter {
     /**
      * Creates the workflow execution record if it does not already exist.
      *
-     * `parentWorkflowId` records the workflow that started this one as
-     * a child, or `null` for a top-level execution. It is only meaningful on
-     * first creation; a later call for an existing workflow leaves the stored
-     * parent untouched.
+     * `parentWorkflowId` records the workflow that started this one as a child,
+     * or `null` for a top-level execution. It is only meaningful on first
+     * creation; a later call for an existing workflow leaves the stored parent
+     * untouched.
      */
     ensureWorkflow(
         workflowId: string,
@@ -166,11 +166,7 @@ export interface StorageAdapter {
      * @returns The due time of the sleep timer (the existing one if it was
      *   already created, otherwise the newly recorded `runAt`).
      */
-    ensureSleepTimer(
-        workflowId: string,
-        timerKey: string,
-        runAt: Date,
-    ): Promise<SleepTimer>;
+    ensureSleepTimer(workflowId: string, timerKey: string, runAt: Date): Promise<SleepTimer>;
 
     /**
      * Atomically claims up to `limit` timers whose due time has passed, marking
@@ -181,7 +177,7 @@ export interface StorageAdapter {
     /**
      * Sets the status of a specific timer.
      */
-    setTimerStatus(scheduleId: number, status: ScheduleStatus): Promise<void>;
+    setTimerStatus(scheduleId: string, status: ScheduleStatus): Promise<void>;
 
     /**
      * Appends an immutable audit event.

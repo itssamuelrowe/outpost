@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 import { addMilliseconds, compareDesc, isAfter } from "date-fns";
@@ -29,9 +30,9 @@ import type { StorageAdapter, WorkflowFilter } from "../interfaces/storage-adapt
  * The complete shape of the JSON document written to disk.
  *
  * Every field is a plain, JSON-friendly value: dates are ISO strings and
- * buffers are base64. The `nextScheduleId` and `nextEventId` counters give the
- * file a self-contained source of monotonically increasing identifiers, so no
- * external sequence is required.
+ * buffers are base64. Schedule and event identifiers are UUID strings assigned
+ * when a row is created, so the file is self-contained and needs no external
+ * sequence or running counter.
  */
 interface PersistedState {
     workflows: Record<string, RawWorkflow>;
@@ -40,14 +41,12 @@ interface PersistedState {
     cronSchedules: Record<string, RawCronSchedule>;
     sleepTimers: Record<string, string>;
     events: RawEvent[];
-    nextScheduleId: number;
-    nextEventId: number;
 }
 
 /**
- * The persisted form of a {@link Workflow}: identical in structure, but with
- * the input and output buffers encoded as base64 and the timestamps stored as
- * ISO strings.
+ * The persisted form of a {@link Workflow}: identical in structure, but with the
+ * input and output buffers encoded as base64 and the timestamps stored as ISO
+ * strings.
  */
 interface RawWorkflow {
     workflowId: string;
@@ -87,7 +86,7 @@ interface RawStep {
  * polls to dispatch retries and durable-sleep resumes when they come due.
  */
 interface RawSchedule {
-    scheduleId: number;
+    scheduleId: string;
     workflowId: string;
     stepKey: string | null;
     runAt: string;
@@ -102,7 +101,7 @@ interface RawSchedule {
  * file without a fixed schema.
  */
 interface RawEvent {
-    id: number;
+    id: string;
     workflowId: string;
     stepKey: string | null;
     eventType: EventType;
@@ -177,8 +176,6 @@ export class JsonFileStorage implements StorageAdapter {
                 cronSchedules: {},
                 sleepTimers: {},
                 events: [],
-                nextScheduleId: 1,
-                nextEventId: 1,
             };
         }
         const parsed = JSON.parse(readFileSync(this.filePath, "utf8")) as PersistedState;
@@ -402,7 +399,7 @@ export class JsonFileStorage implements StorageAdapter {
             step.status =
                 status === StepStatus.AMBIGUOUS ? StepStatus.AMBIGUOUS : StepStatus.PENDING;
             state.schedules.push({
-                scheduleId: state.nextScheduleId++,
+                scheduleId: randomUUID(),
                 workflowId,
                 stepKey,
                 runAt: retryAt.toISOString(),
@@ -455,7 +452,7 @@ export class JsonFileStorage implements StorageAdapter {
          * resume when the sleep becomes due.
          */
         state.schedules.push({
-            scheduleId: state.nextScheduleId++,
+            scheduleId: randomUUID(),
             workflowId,
             stepKey: timerKey,
             runAt: runAt.toISOString(),
@@ -475,7 +472,7 @@ export class JsonFileStorage implements StorageAdapter {
     ): Promise<void> {
         const state = this.read();
         state.schedules.push({
-            scheduleId: state.nextScheduleId++,
+            scheduleId: randomUUID(),
             workflowId,
             stepKey,
             runAt: runAt.toISOString(),
@@ -491,7 +488,7 @@ export class JsonFileStorage implements StorageAdapter {
         limit: number,
     ): Promise<
         Array<{
-            scheduleId: number;
+            scheduleId: string;
             workflowId: string;
             stepKey: string | null;
             payload: string | null;
@@ -521,11 +518,9 @@ export class JsonFileStorage implements StorageAdapter {
         }));
     }
 
-    public async setTimerStatus(scheduleId: number, status: ScheduleStatus): Promise<void> {
+    public async setTimerStatus(scheduleId: string, status: ScheduleStatus): Promise<void> {
         const state = this.read();
-        const timer = state.schedules.find(
-            (schedule) => schedule.scheduleId === scheduleId,
-        );
+        const timer = state.schedules.find((schedule) => schedule.scheduleId === scheduleId);
         if (timer) {
             timer.status = status;
             this.write(state);
@@ -540,7 +535,7 @@ export class JsonFileStorage implements StorageAdapter {
     ): Promise<void> {
         const state = this.read();
         state.events.push({
-            id: state.nextEventId++,
+            id: randomUUID(),
             workflowId,
             stepKey,
             eventType,

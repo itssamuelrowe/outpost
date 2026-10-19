@@ -8,9 +8,9 @@
  */
 export interface DueTimer {
     /**
-     * The database-assigned identifier of the claimed timer.
+     * The UUID identifier of the claimed timer.
      */
-    scheduleId: number;
+    scheduleId: string;
     /**
      * The id of the workflow this timer will resume.
      */

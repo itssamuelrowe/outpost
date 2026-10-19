@@ -20,12 +20,12 @@ export type UnownedSchedulesReporter = (count: number) => void;
  *
  * The application supplies this callback because only it knows how to map a
  * workflow identifier back to a runnable workflow (for example, by calling
- * `engine.run(name, workflowId, input)`). Keeping the resume logic
- * outside the scheduler preserves the engine's independence from any particular
- * dispatch mechanism.
+ * `engine.run(name, workflowId, input)`). Keeping the resume logic outside the
+ * scheduler preserves the engine's independence from any particular dispatch
+ * mechanism.
  */
 export type DueTimerHandler = (timer: {
-    scheduleId: number;
+    scheduleId: string;
     workflowId: string;
     stepKey: string | null;
     payload: string | null;
@@ -210,9 +210,9 @@ export interface OwnershipOptions {
 
 /**
  * The ownership configuration after defaults are applied, held internally by a
- * {@link Scheduler} when the ownership model is enabled. Every field is
- * resolved to a concrete value, including a definite `processId`, so the
- * scheduler never has to re-apply defaults at use sites.
+ * {@link Scheduler} when the ownership model is enabled. Every field is resolved
+ * to a concrete value, including a definite `processId`, so the scheduler never
+ * has to re-apply defaults at use sites.
  */
 export interface ResolvedOwnership {
     /**
@@ -232,7 +232,8 @@ export interface ResolvedOwnership {
      */
     releaseOnStop: boolean;
     /**
-     * Whether this process also fires due-but-unowned schedules as a safety net.
+     * Whether this process also fires due-but-unowned schedules as a safety
+     * net.
      */
     fireUnownedAsSafetyNet: boolean;
 }

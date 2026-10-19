@@ -9,9 +9,9 @@ import type { ScheduleStatus } from "../enums/schedule-status.enum.js";
  */
 export interface Schedule {
     /**
-     * The database-assigned identifier for this timer.
+     * The UUID identifier for this timer, assigned when it is created.
      */
-    scheduleId: number;
+    scheduleId: string;
     /**
      * The id of the workflow this timer will resume.
      */

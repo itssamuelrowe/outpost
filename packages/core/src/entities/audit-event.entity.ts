@@ -9,9 +9,9 @@ import type { EventType } from "../enums/event-type.enum.js";
  */
 export interface AuditEvent {
     /**
-     * The unique id for this event.
+     * The UUID identifier for this event, assigned when it is recorded.
      */
-    id: number;
+    id: string;
     /**
      * The id of the workflow this event concerns.
      */
