@@ -38,7 +38,7 @@ await alerts.dispatch({
     severity: AlertSeverity.CRITICAL,
     title: "Checkout workflow failed",
     message: "Order order-1001 could not be created and confirmed after all retries.",
-    workflowIdentifier: "order-1001",
+    workflowId: "order-1001",
     occurredAt: new Date(),
 });
 ```

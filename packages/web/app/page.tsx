@@ -24,7 +24,6 @@ import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import CloudSyncOutlinedIcon from "@mui/icons-material/CloudSyncOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
-import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import BedtimeOutlinedIcon from "@mui/icons-material/BedtimeOutlined";
 import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
@@ -185,7 +184,7 @@ const guarantees: FeatureCard[] = [
     {
         icon: <ExtensionOutlinedIcon />,
         title: "Modular plugins",
-        body: "Circuit breakers, alerts, and chaos testing live outside the core so it stays small.",
+        body: "Alerts and chaos testing live outside the core so it stays small.",
     },
 ];
 
@@ -204,11 +203,6 @@ const packages: PackageCard[] = [
         name: "@outpost/transport-sqs",
         desc: "First-party SQS consumer and publisher; transport stays out of core",
         icon: <CloudSyncOutlinedIcon />,
-    },
-    {
-        name: "@outpost/plugin-resilience",
-        desc: "Circuit breaker middleware and backoff helpers",
-        icon: <ShieldOutlinedIcon />,
     },
     {
         name: "@outpost/plugin-alerts",
@@ -268,7 +262,6 @@ const whyReasons: FeatureCard[] = [
 
 const limits = [
     "Exactly-once external side effects are not guaranteed. The probe pattern resolves the ambiguous window honestly, but it does not eliminate the underlying distributed-transaction problem.",
-    "Circuit breaker state is process-local, not fleet-wide dependency health.",
     "The scheduler polls the storage backend, which is designed for moderate timer volumes rather than millions of concurrent timers.",
     "No deterministic replay. Durability applies at explicit ctx.step(...) boundaries, not to arbitrary control flow.",
 ];
@@ -466,8 +459,8 @@ export default async function Home() {
                         <SectionIcon icon={<ExtensionOutlinedIcon />} />
                         <Typography variant="h3">A small core, modular edges</Typography>
                         <NarrowCenteredMuted>
-                            Transport, resilience, and alerting stay out of the core so it never
-                            recreates the complexity it exists to avoid.
+                            Transport and alerting stay out of the core so it never recreates the
+                            complexity it exists to avoid.
                         </NarrowCenteredMuted>
                     </HeadStack>
                     <Grid container spacing={2}>

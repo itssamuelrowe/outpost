@@ -9,9 +9,9 @@ import type { StepContext } from "./step-context.interface.js";
  * A middleware may execute logic before and after calling `next`, may short
  * circuit by not calling `next`, and may transform the returned value.
  *
- * Circuit breakers, chaos fault injection, metrics, and logging are all
- * implemented as middleware so the core execution engine stays free of any
- * vendor-specific concerns.
+ * Chaos fault injection, metrics, and logging are all implemented as
+ * middleware so the core execution engine stays free of any vendor-specific
+ * concerns.
  *
  * @typeParam TResult The result type flowing through the pipeline. It defaults
  * to `unknown` so a middleware can be written once and applied to steps of any

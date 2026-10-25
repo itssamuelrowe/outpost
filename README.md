@@ -18,7 +18,7 @@ An embeddable durable execution library that runs **inside your application proc
 - **Embeddable.** A library, not a platform. Add it to an existing app.
 - **Correctness-first.** Leasing, stale-worker fencing, the commit window, and ambiguous-state resolution are the parts we refuse to cut corners on.
 - **Pluggable storage.** The engine depends on a narrow storage contract. Any backend that provides the required atomic coordination primitives can implement it.
-- **Modular.** Resilience (circuit breakers, backoff), alerts, and chaos testing live in separate plugin packages so the core stays small.
+- **Modular.** Alerts and chaos testing live in separate plugin packages so the core stays small.
 
 
 ## The problem Outpost exists to solve
@@ -154,7 +154,6 @@ The `(workflowIdentifier, stepKey)` pair uniquely identifies a durable step. Re-
 | `@outpost/core`              | Workflow/step execution, leasing, ambiguous-state resolution, middleware, audit |
 | `@outpost/storage-mysql`     | MySQL/InnoDB reference storage adapter                                          |
 | `@outpost/transport-sqs`     | First-party SQS consumer/publisher (transport stays out of core)                |
-| `@outpost/plugin-resilience` | Circuit breaker middleware plus backoff helpers                                 |
 | `@outpost/plugin-alerts`     | Vendor-neutral alert hooks (webhook, Slack, PagerDuty)                          |
 | `@outpost/plugin-chaos`      | Deterministic fault injection: crashes, transient failures, lease expiry        |
 
@@ -166,8 +165,6 @@ The `(workflowIdentifier, stepKey)` pair uniquely identifies a durable step. Re-
   Nothing is, without cooperation from the downstream system. The `AMBIGUOUS` status plus a `probe` resolve the window honestly, but they do not eliminate the underlying distributed-transaction problem. Prefer downstream idempotency keys where the provider supports them.
 - **No deterministic replay**  
   Durability applies at explicit step boundaries (each `@Step` method), not to arbitrary control flow between them.
-- **Circuit breaker state is process-local**  
-  It is not fleet-wide dependency health.
 - **The scheduler polls the storage backend**  
   This is designed for moderate timer volumes. Very high timer counts will need a different backend.
 

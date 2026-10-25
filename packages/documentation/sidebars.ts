@@ -60,7 +60,6 @@ const sidebars: SidebarsConfig = {
             label: "Advanced topics",
             items: [
                 "guides/managing-workflows",
-                "guides/circuit-breakers",
                 "guides/alerts",
                 "concepts/serialization",
                 "concepts/leases-and-fencing",
